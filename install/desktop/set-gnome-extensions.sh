@@ -1,10 +1,15 @@
 sudo apt install -y gnome-shell-extension-manager pipx
 pipx install gnome-extensions-cli --system-site-packages
 
-# Turn off default Ubuntu extensions
-gnome-extensions disable tiling-assistant@ubuntu.com
-gnome-extensions disable ubuntu-appindicators@ubuntu.com
-gnome-extensions disable ubuntu-dock@ubuntu.com
+# Turn off default Ubuntu extensions (only if running on Ubuntu)
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  if [ "$ID" = "ubuntu" ]; then
+    gnome-extensions disable tiling-assistant@ubuntu.com
+    gnome-extensions disable ubuntu-appindicators@ubuntu.com
+    gnome-extensions disable ubuntu-dock@ubuntu.com
+  fi
+fi
 gnome-extensions disable ding@rastersoft.com
 
 # Pause to assure user is ready to accept confirmations
