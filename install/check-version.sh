@@ -8,11 +8,14 @@ fi
 
 . /etc/os-release
 
-# Check if running on Ubuntu 24.04 or higher
-if [ "$ID" != "ubuntu" ] || [ $(echo "$VERSION_ID >= 24.04" | bc) != 1 ]; then
+# Check if running on Ubuntu 24.04+ or Debian 12+
+if { [ "$ID" = "ubuntu" ] && [ $(echo "$VERSION_ID >= 24.04" | bc) -eq 1 ]; } || \
+   { [ "$ID" = "debian" ] && [ $(echo "$VERSION_ID >= 12" | bc) -eq 1 ]; }; then
+  : # Supported
+else
   echo "$(tput setaf 1)Error: OS requirement not met"
   echo "You are currently running: $ID $VERSION_ID"
-  echo "OS required: Ubuntu 24.04 or higher"
+  echo "OS required: Ubuntu 24.04+ or Debian 12+ (bookworm)"
   echo "Installation stopped."
   exit 1
 fi
