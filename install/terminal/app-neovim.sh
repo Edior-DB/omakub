@@ -1,28 +1,43 @@
-cd /tmp
-wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
-tar -xf nvim.tar.gz
-sudo install nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
-sudo cp -R nvim-linux-x86_64/lib /usr/local/
-sudo cp -R nvim-linux-x86_64/share /usr/local/
-rm -rf nvim-linux-x86_64 nvim.tar.gz
-cd -
+# Get latest Neovim version
+LATEST_NVIM_VERSION=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
+INSTALLED_NVIM_VERSION=$(command -v nvim >/dev/null 2>&1 && nvim --version | head -n1 | awk '{print $2}')
+
+if [ "$INSTALLED_NVIM_VERSION" = "$LATEST_NVIM_VERSION" ]; then
+  echo "Neovim $LATEST_NVIM_VERSION is already installed, skipping."
+else
+  cd /tmp
+  wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
+  tar -xf nvim.tar.gz
+  sudo install nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+  sudo cp -R nvim-linux-x86_64/lib /usr/local/
+  sudo cp -R nvim-linux-x86_64/share /usr/local/
+  rm -rf nvim-linux-x86_64 nvim.tar.gz
+  cd -
+fi
 
 # Install luarocks and tree-sitter-cli to resolve lazyvim :checkhealth warnings
 sudo apt install -y luarocks
 if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
   sudo apt install -y tree-sitter-cli
 elif [ "$OMAKUB_OS_ID" = "debian" ]; then
-  cd /tmp
-  TREE_SITTER_URL=$(curl -s https://api.github.com/repos/tree-sitter/tree-sitter/releases/latest | grep browser_download_url | grep 'tree-sitter-linux-x64.gz' | cut -d '"' -f 4 | head -n 1)
-  if [ -z "$TREE_SITTER_URL" ]; then
-    echo "Could not find tree-sitter CLI binary for Debian. Aborting."
-    exit 1
+  # Check if tree-sitter is installed and at latest version
+  LATEST_TREE_SITTER_VERSION=$(curl -s https://api.github.com/repos/tree-sitter/tree-sitter/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
+  INSTALLED_TREE_SITTER_VERSION=$(command -v tree-sitter >/dev/null 2>&1 && tree-sitter --version 2>/dev/null | awk '{print $3}')
+  if [ "$INSTALLED_TREE_SITTER_VERSION" = "$LATEST_TREE_SITTER_VERSION" ]; then
+    echo "tree-sitter $LATEST_TREE_SITTER_VERSION is already installed, skipping."
+  else
+    cd /tmp
+    TREE_SITTER_URL=$(curl -s https://api.github.com/repos/tree-sitter/tree-sitter/releases/latest | grep browser_download_url | grep 'tree-sitter-linux-x64.gz' | cut -d '"' -f 4 | head -n 1)
+    if [ -z "$TREE_SITTER_URL" ]; then
+      echo "Could not find tree-sitter CLI binary for Debian. Aborting."
+      exit 1
+    fi
+    wget -O tree-sitter.gz "$TREE_SITTER_URL"
+    gunzip tree-sitter.gz
+    chmod +x tree-sitter
+    sudo mv tree-sitter /usr/local/bin/tree-sitter
+    cd -
   fi
-  wget -O tree-sitter.gz "$TREE_SITTER_URL"
-  gunzip tree-sitter.gz
-  chmod +x tree-sitter
-  sudo mv tree-sitter /usr/local/bin/tree-sitter
-  cd -
 fi
 
 # Only attempt to set configuration if Neovim has never been run
