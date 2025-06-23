@@ -8,12 +8,16 @@ if [ -f /etc/os-release ]; then
     sudo apt install -y ulauncher
   elif [ "$ID" = "debian" ]; then
     # Use official .deb for Debian
-    cd /tmp
-    ULVER=$(curl -s https://api.github.com/repos/Ulauncher/Ulauncher/releases/latest | grep 'tag_name' | cut -d\" -f4)
-    wget -O ulauncher.deb "https://github.com/Ulauncher/Ulauncher/releases/download/$ULVER/ulauncher_${ULVER#v}_all.deb"
-    sudo apt install -y ./ulauncher.deb
-    rm ulauncher.deb
-    cd -
+    if ! command -v ulauncher >/dev/null 2>&1; then
+      cd /tmp
+      ULVER=$(curl -s https://api.github.com/repos/Ulauncher/Ulauncher/releases/latest | grep 'tag_name' | cut -d\" -f4)
+      wget -O ulauncher.deb "https://github.com/Ulauncher/Ulauncher/releases/download/$ULVER/ulauncher_${ULVER#v}_all.deb"
+      sudo apt install -y ./ulauncher.deb
+      rm ulauncher.deb
+      cd -
+    else
+      echo "ulauncher is already installed, skipping."
+    fi
   fi
 fi
 
