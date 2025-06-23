@@ -15,8 +15,7 @@ if [ -x "$(command -v systemctl)" ]; then
   CURRENT_DM=$(cat /etc/X11/default-display-manager 2>/dev/null || echo "")
   if [[ "$CURRENT_DM" != *gdm* ]]; then
     echo "GDM (Gnome Display Manager) is not the current login manager."
-    read -p "Do you want to switch to GDM? [y/N]: " confirm
-    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    if gum confirm "Do you want to switch to GDM (Gnome Display Manager)?"; then
       sudo apt install -y gdm3
       sudo systemctl disable --now lightdm 2>/dev/null || true
       sudo systemctl enable --now gdm3
