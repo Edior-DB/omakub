@@ -11,7 +11,7 @@ if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
   sudo apt install -y eza
 elif [ "$OMAKUB_OS_ID" = "debian" ]; then
   cd /tmp
-  EZA_URL=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep browser_download_url | grep 'eza-linux-x86_64-unknown-linux-gnu.tar.gz' | cut -d '"' -f 4 | head -n 1)
+  EZA_URL=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep browser_download_url | grep 'eza_x86_64-unknown-linux-gnu.tar.gz' | cut -d '"' -f 4 | head -n 1)
   if [ -z "$EZA_URL" ]; then
     echo "Could not find eza binary for Debian. Aborting."
     exit 1
