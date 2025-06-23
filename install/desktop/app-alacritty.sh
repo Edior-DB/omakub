@@ -1,5 +1,11 @@
 # Alacritty is a GPU-powered and highly extensible terminal. See https://alacritty.org/
-sudo apt install -y alacritty
+# Install Alacritty
+if [ "$OMAKUB_OS_ID" = "ubuntu" ] || [ "$OMAKUB_OS_ID" = "debian" ]; then
+  sudo apt install -y alacritty
+else
+  echo "Unsupported OS for Alacritty installation."
+  exit 1
+fi
 mkdir -p ~/.config/alacritty
 cp ~/.local/share/omakub/configs/alacritty.toml ~/.config/alacritty/alacritty.toml
 cp ~/.local/share/omakub/configs/alacritty/shared.toml ~/.config/alacritty/shared.toml

@@ -3,8 +3,14 @@
 # Make alacritty default terminal emulator
 sudo update-alternatives --set x-terminal-emulator /usr/bin/alacritty
 
-# Adding alacritty to nautilus contextual menu requires the python wrapper for the libraries
-sudo apt install -y python3-nautilus
+# Install python3-nautilus (for Alacritty integration)
+if [ "$OMAKUB_OS_ID" = "ubuntu" ] || [ "$OMAKUB_OS_ID" = "debian" ]; then
+  sudo apt install -y python3-nautilus
+else
+  echo "Unsupported OS for python3-nautilus installation."
+  exit 1
+fi
+
 mkdir -p ~/.local/share/nautilus-python/extensions/
 
 cat > ~/.local/share/nautilus-python/extensions/open-alacritty.py <<TECHNICALLYNOTACONFIGSOHEREDOCCEDITIS
