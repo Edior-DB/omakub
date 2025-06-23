@@ -7,6 +7,8 @@ if [ ! -f /etc/os-release ]; then
 fi
 
 . /etc/os-release
+export OMAKUB_OS_ID="$ID"
+export OMAKUB_OS_VERSION_ID="$VERSION_ID"
 
 # Check if running on Ubuntu 24.04+ or Debian 12+
 if { [ "$ID" = "ubuntu" ] && [ $(echo "$VERSION_ID >= 24.04" | bc) -eq 1 ]; } || \
