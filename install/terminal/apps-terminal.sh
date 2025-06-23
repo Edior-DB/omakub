@@ -11,27 +11,40 @@ if ! command -v eza >/dev/null 2>&1; then
   if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
     sudo apt install -y eza
   elif [ "$OMAKUB_OS_ID" = "debian" ]; then
-    cd /tmp
-    EZA_URL=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep browser_download_url | grep 'eza_x86_64-unknown-linux-gnu.tar.gz' | cut -d '"' -f 4 | head -n 1)
-    if [ -z "$EZA_URL" ]; then
-      echo "Could not find eza binary for Debian. Aborting."
-      exit 1
+    # Check for latest version
+    LATEST_EZA_VERSION=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
+    INSTALLED_EZA_VERSION=$(command -v eza >/dev/null 2>&1 && eza --version 2>/dev/null | awk '{print $2}')
+    if [ "$INSTALLED_EZA_VERSION" = "$LATEST_EZA_VERSION" ]; then
+      echo "eza $LATEST_EZA_VERSION is already installed, skipping."
+    else
+      cd /tmp
+      EZA_URL=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep browser_download_url | grep 'eza_x86_64-unknown-linux-gnu.tar.gz' | cut -d '"' -f 4 | head -n 1)
+      if [ -z "$EZA_URL" ]; then
+        echo "Could not find eza binary for Debian. Aborting."
+        exit 1
+      fi
+      wget -O eza.tar.gz "$EZA_URL"
+      tar -xzf eza.tar.gz
+      EZA_BIN=$(find . -type f -name eza | head -n 1)
+      if [ -z "$EZA_BIN" ]; then
+        echo "eza binary not found in archive. Aborting."
+        exit 1
+      fi
+      chmod +x "$EZA_BIN"
+      sudo mv "$EZA_BIN" /usr/local/bin/eza
+      rm -rf eza.tar.gz eza-*
+      cd -
     fi
-    wget -O eza.tar.gz "$EZA_URL"
-    tar -xzf eza.tar.gz
-    # The binary is usually in the extracted folder, find and move it
-    EZA_BIN=$(find . -type f -name eza | head -n 1)
-    if [ -z "$EZA_BIN" ]; then
-      echo "eza binary not found in archive. Aborting."
-      exit 1
-    fi
-    chmod +x "$EZA_BIN"
-    sudo mv "$EZA_BIN" /usr/local/bin/eza
-    rm -rf eza.tar.gz eza-*
-    cd -
   fi
 else
-  echo "eza is already installed, skipping."
+  # If already installed, check version
+  LATEST_EZA_VERSION=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
+  INSTALLED_EZA_VERSION=$(eza --version 2>/dev/null | awk '{print $2}')
+  if [ "$INSTALLED_EZA_VERSION" = "$LATEST_EZA_VERSION" ]; then
+    echo "eza $LATEST_EZA_VERSION is already installed, skipping."
+  else
+    echo "eza is installed but not at latest version ($INSTALLED_EZA_VERSION). Consider updating manually."
+  fi
 fi
 
 # Install btop (resource monitor)
