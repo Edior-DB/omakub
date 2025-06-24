@@ -1,6 +1,6 @@
-# Check if lazydocker and alacritty are installed
-if ! command -v lazydocker >/dev/null 2>&1 || ! command -v alacritty >/dev/null 2>&1; then
-  echo "Warning: LazyDocker or Alacritty is not installed. The Docker launcher will not be created."
+# Check if lazydocker is installed
+if ! command -v lazydocker >/dev/null 2>&1; then
+  echo "Warning: LazyDocker is not installed. The Docker launcher will not be created."
   rm -f ~/.local/share/applications/Docker.desktop
 else
   mkdir -p ~/.local/share/applications

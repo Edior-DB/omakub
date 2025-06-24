@@ -1,6 +1,6 @@
-# Check if alacritty and btop are installed
-if ! command -v alacritty >/dev/null 2>&1 || ! command -v btop >/dev/null 2>&1; then
-  echo "Warning: Alacritty or btop is not installed. The Activity launcher will not be created."
+# Check if btop is installed
+if ! command -v btop >/dev/null 2>&1; then
+  echo "Warning: btop is not installed. The Activity launcher will not be created."
   rm -f ~/.local/share/applications/Activity.desktop
 else
   mkdir -p ~/.local/share/applications
