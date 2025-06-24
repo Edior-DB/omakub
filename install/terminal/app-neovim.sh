@@ -29,8 +29,12 @@ if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
   sudo apt install -y tree-sitter-cli
 elif [ "$OMAKUB_OS_ID" = "debian" ]; then
   # Check if tree-sitter is installed and at latest version
+  if command -v tree-sitter >/dev/null 2>&1; then
+    INSTALLED_TREE_SITTER_VERSION=$(tree-sitter --version 2>/dev/null | awk '{print $3}')
+  else
+    INSTALLED_TREE_SITTER_VERSION=""
+  fi
   LATEST_TREE_SITTER_VERSION=$(curl -s https://api.github.com/repos/tree-sitter/tree-sitter/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
-  INSTALLED_TREE_SITTER_VERSION=$(command -v tree-sitter >/dev/null 2>&1 && tree-sitter --version 2>/dev/null | awk '{print $3}')
   if [ "$INSTALLED_TREE_SITTER_VERSION" = "$LATEST_TREE_SITTER_VERSION" ]; then
     echo "tree-sitter $LATEST_TREE_SITTER_VERSION is already installed, skipping."
   else
