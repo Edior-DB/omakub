@@ -1,3 +1,9 @@
+# Idempotent install: check if Minecraft Launcher is already installed
+if command -v minecraft-launcher >/dev/null 2>&1; then
+  echo "Minecraft Launcher is already installed, skipping."
+  exit 0
+fi
+
 sudo apt install -y openjdk-8-jdk
 
 cd /tmp
