@@ -4,6 +4,10 @@
 
 set -eEuo pipefail
 
+# Initialize for error reporting
+current_command=""
+last_command=""
+
 # Improved error reporting
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'echo -e "\nOmakub desktop-only installation failed!\n  Command: $last_command\n  Exit code: $?\n  You can retry by running: source ~/.local/share/omakub/install/desktop-only.sh"; while true; do sleep 1; done' ERR
