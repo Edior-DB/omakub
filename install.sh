@@ -3,7 +3,7 @@ set -eEuo pipefail
 
 # Improved error reporting: show the failed command and its exit code for easier troubleshooting
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-trap 'echo -e "\nOmakub installation failed!\n  Command: $last_command\n  Exit code: $?\n  You can retry by running: source ~/.local/share/omakub/install.sh"' ERR
+trap 'echo -e "\nOmakub installation failed!\n  Command: $last_command\n  Exit code: $?\n  You can retry by running: source ~/.local/share/omakub/install.sh"; while true; do sleep 1; done' ERR
 
 # Check the distribution name and version and abort if incompatible
 source ~/.local/share/omakub/install/check-version.sh
