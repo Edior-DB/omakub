@@ -11,7 +11,6 @@ trap 'echo -e "\nOmakub installation failed!\n  Command: $last_command\n  Exit c
 
 # Check the distribution name and version and abort if incompatible
 source ~/.local/share/omakub/install/check-version.sh
-source ~/.local/share/omakub/install/check-gnome.sh
 
 # Ask for required tools and user choices
 echo "Get ready to make a few choices..."
@@ -37,6 +36,8 @@ if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
   gsettings set org.gnome.desktop.screensaver lock-enabled true
   gsettings set org.gnome.desktop.session idle-delay 300
 else
+  # If not running GNOME, check and offer to install GNOME
+  source ~/.local/share/omakub/install/check-gnome.sh
   echo "Only installing terminal tools..."
   source ~/.local/share/omakub/install/terminal.sh
 fi
