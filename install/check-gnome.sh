@@ -26,11 +26,11 @@ if ! command -v gnome-shell >/dev/null 2>&1; then
   echo "Gnome installation complete."
   # Prompt user to reboot or continue
   if gum confirm "Gnome has been installed. You must reboot to start a GNOME session and install desktop apps. Reboot now?"; then
-    echo "Rebooting... Please log in to GNOME and re-run the installer."
+    echo "Rebooting... Please log in to GNOME and then run: source ~/.local/share/omakub/install/desktop-only.sh to complete desktop setup."
     sudo reboot
     exit 0
   else
-    echo "Continuing with terminal-only installation. You can re-run the installer after reboot to complete desktop setup."
+    echo "Continuing with terminal-only installation. After rebooting into GNOME, run: source ~/.local/share/omakub/install/desktop-only.sh to complete desktop setup."
   fi
 else
   echo "Gnome is already installed."
