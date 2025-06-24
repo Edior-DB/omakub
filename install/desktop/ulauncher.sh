@@ -1,10 +1,3 @@
-# Idempotent install: check if ulauncher is installed before running --version
-if command -v ulauncher >/dev/null 2>&1; then
-  ULAUNCHER_VERSION=$(ulauncher --version 2>/dev/null | head -n 1)
-  echo "Ulauncher is already installed: $ULAUNCHER_VERSION. Skipping install."
-  exit 0
-fi
-
 if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
   if ! gpg --keyserver keyserver.ubuntu.com --recv 0xfaf1020699503176; then
     echo "Error: Failed to receive Ulauncher GPG key."; exit 1; fi
