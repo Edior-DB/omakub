@@ -19,7 +19,11 @@ elif [ "$OMAKUB_OS_ID" = "debian" ]; then
   if ! command -v eza >/dev/null 2>&1; then
     # Check for latest version
     LATEST_EZA_VERSION=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
-    INSTALLED_EZA_VERSION=$(command -v eza >/dev/null 2>&1 && eza --version 2>/dev/null | awk '{print $2}')
+    if command -v eza >/dev/null 2>&1; then
+      INSTALLED_EZA_VERSION=$(eza --version 2>/dev/null | awk '{print $2}')
+    else
+      INSTALLED_EZA_VERSION=""
+    fi
     if [ "$INSTALLED_EZA_VERSION" = "$LATEST_EZA_VERSION" ]; then
       echo "eza $LATEST_EZA_VERSION is already installed, skipping."
     else
@@ -57,7 +61,11 @@ elif [ "$OMAKUB_OS_ID" = "debian" ]; then
   else
     # If already installed, check version
     LATEST_EZA_VERSION=$(curl -s https://api.github.com/repos/eza-community/eza/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
-    INSTALLED_EZA_VERSION=$(eza --version 2>/dev/null | awk '{print $2}')
+    if command -v eza >/dev/null 2>&1; then
+      INSTALLED_EZA_VERSION=$(eza --version 2>/dev/null | awk '{print $2}')
+    else
+      INSTALLED_EZA_VERSION=""
+    fi
     if [ "$INSTALLED_EZA_VERSION" = "$LATEST_EZA_VERSION" ]; then
       echo "eza $LATEST_EZA_VERSION is already installed, skipping."
     else
