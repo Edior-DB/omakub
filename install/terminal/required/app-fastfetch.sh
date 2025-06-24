@@ -1,5 +1,6 @@
-#!/bin/bash
-# Optional: Fastfetch system info tool
+#!/usr/bin/env bash
+# Install fastfetch (system info tool)
+# Check if fastfetch is installed before running --version
 if command -v fastfetch >/dev/null 2>&1; then
   FASTFETCH_VERSION=$(fastfetch --version 2>/dev/null | head -n 1)
   echo "Fastfetch is already installed: $FASTFETCH_VERSION. Skipping install."
