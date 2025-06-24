@@ -46,3 +46,6 @@ if [ "$ARCH" != "x86_64" ] && [ "$ARCH" != "i686" ]; then
   echo "Installation stopped."
   exit 1
 fi
+
+sudo apt-get update >/dev/null
+sudo apt-get install -y git >/dev/null
