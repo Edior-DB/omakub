@@ -15,7 +15,7 @@ trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'omakub_error_trap' ERR
 
 # Check the distribution name and version and abort if incompatible
-source ~/.local/share/omakub/install/check-version.sh
+
 
 # Ask for required tools and user choices
 echo "Get ready ..."
