@@ -16,7 +16,7 @@ trap 'omakub_error_trap' ERR
 
 # Check the distribution name and version and abort if incompatible
 
-
+source ~/.local/share/omakub/install/check-version.sh
 # Ask for required tools and user choices
 echo "Get ready ..."
 source ~/.local/share/omakub/install/terminal/required/app-gum.sh >/dev/null
