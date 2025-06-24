@@ -11,4 +11,7 @@ else
 fi
 
 # Run terminal installers
-for installer in ~/.local/share/omakub/install/terminal/*.sh; do source $installer; done
+for installer in ~/.local/share/omakub/install/terminal/*.sh; do
+  echo "Running terminal installer: $installer"
+  source $installer
+done
