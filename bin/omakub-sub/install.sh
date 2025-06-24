@@ -1,3 +1,11 @@
+set -euo pipefail
+LOGFILE="${OMAKUB_PATH:-$HOME}/omakub-error.log"
+
+if [ -z "${OMAKUB_PATH:-}" ]; then
+  echo "OMAKUB_PATH is not set. Exiting." >&2
+  exit 1
+fi
+
 CHOICES=(
   "Dev Editor        Install alternative programming editors"
   "Dev Language      Install programming language environment"
@@ -27,30 +35,33 @@ CHOICES=(
 CHOICE=$(gum choose "${CHOICES[@]}" --height 25 --header "Install application")
 
 if [[ "$CHOICE" == "<< Back"* ]] || [[ -z "$CHOICE" ]]; then
-  # Don't install anything
   echo ""
 elif [[ "$CHOICE" == "> All"* ]]; then
   INSTALLER_FILE=$(gum file $OMAKUB_PATH/install)
-
-  [[ -n "$INSTALLER_FILE" ]] &&
+  if [[ -n "$INSTALLER_FILE" ]]; then
     gum confirm "Run installer?" &&
-    source $INSTALLER_FILE &&
+    source "$INSTALLER_FILE" &&
     gum spin --spinner globe --title "Install completed!" -- sleep 3
+  fi
 else
   INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
-
   case "$INSTALLER" in
-  "dev-editor") INSTALLER_FILE="$OMAKUB_PATH/bin/omakub-sub/install-dev-editor.sh" ;;
-  "web-apps") INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/select-web-apps.sh" ;;
-  "dev-language") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/select-dev-language.sh" ;;
-  "dev-database") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/select-dev-storage.sh" ;;
-  "ollama") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-ollama.sh" ;;
-  "tailscale") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-tailscale.sh" ;;
-  "geekbench") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-geekbench.sh" ;;
-  *) INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/app-$INSTALLER.sh" ;;
+    "dev-editor") INSTALLER_FILE="$OMAKUB_PATH/bin/omakub-sub/install-dev-editor.sh" ;;
+    "web-apps") INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/select-web-apps.sh" ;;
+    "dev-language") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/select-dev-language.sh" ;;
+    "dev-database") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/select-dev-storage.sh" ;;
+    "ollama") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-ollama.sh" ;;
+    "tailscale") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-tailscale.sh" ;;
+    "geekbench") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-geekbench.sh" ;;
+    *) INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/app-$INSTALLER.sh" ;;
   esac
 
-  source $INSTALLER_FILE && gum spin --spinner globe --title "Install completed!" -- sleep 3
+  if [ -f "$INSTALLER_FILE" ]; then
+    echo "Running installer: $INSTALLER_FILE"
+    source "$INSTALLER_FILE" && gum spin --spinner globe --title "Install completed!" -- sleep 3
+  else
+    echo "Installer $INSTALLER_FILE not found." >&2
+  fi
 fi
 
 clear
