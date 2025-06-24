@@ -63,7 +63,9 @@ gsettings set org.gnome.shell.extensions.blur-my-shell.screenshot blur false
 gsettings set org.gnome.shell.extensions.blur-my-shell.window-list blur false
 gsettings set org.gnome.shell.extensions.blur-my-shell.panel blur false
 gsettings set org.gnome.shell.extensions.blur-my-shell.overview blur true
-gsettings set org.gnome.shell.extensions.blur-my-shell.overview pipeline 'pipeline_default'
+# Only set pipeline if the key exists
+gsettings list-keys org.gnome.shell.extensions.blur-my-shell.overview | grep -q '^pipeline$' && \
+  gsettings set org.gnome.shell.extensions.blur-my-shell.overview pipeline 'pipeline_default'
 gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock blur true
 gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock brightness 0.6
 gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock sigma 30
