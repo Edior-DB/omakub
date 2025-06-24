@@ -1,6 +1,6 @@
 # Omakub
 
-Turn a fresh Ubuntu installation into a fully-configured, beautiful, and modern web development system by running a single command. That's the one-line pitch for Omakub. No need to write bespoke configs for every essential tool just to get started or to be up on all the latest command-line tools. Omakub is an opinionated take on what Linux can be at its best.
+Turn a fresh Ubuntu or Debian installation into a fully-configured, beautiful, and modern web development system by running a single command. Omakub is an opinionated take on what Linux can be at its best.
 
 Watch the introduction video and read more at [omakub.org](https://omakub.org).
 
@@ -20,9 +20,14 @@ Omakub supports both **Ubuntu 24.04+** and **Debian 12+**. All installer and des
 - Use `libmysqlclient-dev` for MySQL development on Ubuntu, and `libmariadb-dev`/`libmariadb-dev-compat` on Debian.
 - All PostgreSQL-related packages (`libpq-dev`, `postgresql-client`, `postgresql-client-common`) are available and installed from standard repos on both Ubuntu and Debian.
 - All direct `.deb`/external installs are now idempotent: the script checks if the tool is already installed before downloading/installing.
-- Flatpak/Flathub is used for some apps (e.g., Pinta on Debian) with automatic remote setup and aliasing for user convenience.
+- Flatpak/Flathub is now a required dependency and is installed/configured before any app install. Some apps (e.g., Pinta on Debian) use Flatpak with automatic remote setup and aliasing for user convenience.
 - Improved error handling: failed commands and exit codes are displayed, and the script halts for user review.
 - After GNOME installation, the user is prompted to reboot or continue with terminal-only setup, ensuring a smooth first-time experience.
+- **Only core terminal tools and GNOME-tweaking desktop scripts are installed by default.** All other apps (including Docker, Neovim, Chrome, LibreOffice, etc.) are now optional and can be installed later via the Omakub app or optional scripts.
+
+### Optional Apps
+
+Omakub now separates core and optional apps. To install optional apps (like Docker, Neovim, Chrome, LibreOffice, etc.), launch the Omakub app after setup, or run the relevant script from the `install/terminal/optional/` or `install/desktop/optional/` directories.
 
 **These changes were contributed by [GitHub Copilot](https://github.com/features/copilot) as part of a comprehensive cross-distro compatibility, idempotency, and robustness refactor (2025).**
 
