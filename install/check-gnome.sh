@@ -3,13 +3,21 @@
 # Ensure gum is installed for prompts
 if ! command -v gum >/dev/null 2>&1; then
   echo "gum not found. Installing gum for interactive prompts..."
-  if [ "$OMAKUB_OS_ID" = "ubuntu" ] || [ "$OMAKUB_OS_ID" = "debian" ]; then
-    sudo apt update
-    sudo apt install -y gum
-  else
-    echo "Unsupported OS for gum installation."
+  GUM_VERSION="0.14.3"
+  ARCH="$(uname -m)"
+  if [ "$ARCH" != "x86_64" ]; then
+    echo "Unsupported architecture for gum binary install: $ARCH"
     exit 1
   fi
+  cd /tmp
+  wget -qO gum.deb "https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_amd64.deb"
+  if ! sudo apt-get install -y --allow-downgrades ./gum.deb; then
+    echo "\033[31mError: Failed to install gum. You may need to resolve dependencies manually (e.g., run 'sudo apt --fix-broken install').\033[0m"
+    rm -f gum.deb
+    exit 1
+  fi
+  rm gum.deb
+  cd -
 fi
 
 # Check if Gnome is installed
