@@ -83,7 +83,9 @@ gsettings set org.gnome.shell.extensions.tophat show-icons false
 gsettings set org.gnome.shell.extensions.tophat show-cpu false
 gsettings set org.gnome.shell.extensions.tophat show-disk false
 gsettings set org.gnome.shell.extensions.tophat show-mem false
-gsettings set org.gnome.shell.extensions.tophat show-fs false
+# Only set show-fs if the key exists
+gsettings list-keys org.gnome.shell.extensions.tophat | grep -q '^show-fs$' && \
+  gsettings set org.gnome.shell.extensions.tophat show-fs false
 gsettings set org.gnome.shell.extensions.tophat network-usage-unit bits
 
 # Configure AlphabeticalAppGrid
