@@ -23,7 +23,7 @@ echo -e "\nBegin installation (or abort with ctrl+c)..."
 
 if ! groups "$USER" | grep -qw sudo; then
     echo "$(tput setaf 1)Error: Your user ($USER) is not in the 'sudo' group."
-    echo "On Debian 12+, you must add your user to the 'sudo' group and re-login before running this installer."
+    echo "On Debian 12+, you must add your user to the 'sudo' group and re-login beore running this installer."
     echo "Switch to root with: su -"
     echo "Then run: /sbin/usermod -aG sudo <your-username>"
     echo "(Replace <your-username> with your actual username, e.g. '$(logname)' if unsure)"
