@@ -3,8 +3,12 @@ if ! command -v alacritty >/dev/null 2>&1; then
   echo "Warning: Alacritty is not installed. The Omakub launcher will not be created."
   rm -f ~/.local/share/applications/Omakub.desktop
 else
-  # Create the launcher if Alacritty is present
-  cat <<EOF >~/.local/share/applications/Omakub.desktop
+  mkdir -p ~/.local/share/applications
+  if [ ! -w ~/.local/share/applications ]; then
+    echo "Error: Cannot write to ~/.local/share/applications."
+  else
+    # Create the launcher if Alacritty is present
+    cat <<EOF >~/.local/share/applications/Omakub.desktop
 [Desktop Entry]
 Version=1.0
 Name=Omakub
@@ -16,4 +20,5 @@ Icon=/home/$USER/.local/share/omakub/applications/icons/Omakub.png
 Categories=GTK;
 StartupNotify=false
 EOF
+  fi
 fi
