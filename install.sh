@@ -23,7 +23,7 @@ source ~/.local/share/omakub/install/terminal/required/app-gum.sh >/dev/null
 source ~/.local/share/omakub/install/first-run-choices.sh
 source ~/.local/share/omakub/install/identification.sh
 
-# Only install desktop software and tweaks if running GNOME
+# Only install if running GNOME session
 if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
   # Prevent sleep/lock during installation
   gsettings set org.gnome.desktop.screensaver lock-enabled false
@@ -41,10 +41,7 @@ if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
   gsettings set org.gnome.desktop.screensaver lock-enabled true
   gsettings set org.gnome.desktop.session idle-delay 300
 else
-  # If not running GNOME, check and offer to install GNOME after terminal tools
-  echo "Only installing terminal tools..."
-  source ~/.local/share/omakub/install/terminal.sh
-
-  echo "You can now optionally install GNOME and desktop apps."
-  
+  echo "Error: Omakub must be installed from within a GNOME session."
+  echo "Please log into GNOME and re-run this installer."
+  exit 1
 fi
