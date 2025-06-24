@@ -12,7 +12,7 @@ echo -e "$ascii_art"
 echo "=> Omakub is for fresh Ubuntu 24.04+ or Debian 12+ installations only!"
 echo -e "\nBegin installation (or abort with ctrl+c)..."
 
-
+source ~/.local/share/omakub/install/check-version.sh
 
 echo "Cloning Omakub..."
 rm -rf ~/.local/share/omakub
