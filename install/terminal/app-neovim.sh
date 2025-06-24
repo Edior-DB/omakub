@@ -16,7 +16,15 @@ else
 fi
 
 # Install luarocks and tree-sitter-cli to resolve lazyvim :checkhealth warnings
-sudo apt install -y luarocks
+if command -v luarocks >/dev/null 2>&1; then
+  echo "luarocks is already installed, skipping."
+else
+  echo "Installing luarocks..."
+  if ! sudo apt install -y luarocks; then
+    echo "Error: Failed to install luarocks. Please check your apt sources and try again."
+    exit 1
+  fi
+fi
 if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
   sudo apt install -y tree-sitter-cli
 elif [ "$OMAKUB_OS_ID" = "debian" ]; then
