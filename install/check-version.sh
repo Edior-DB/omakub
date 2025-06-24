@@ -49,4 +49,4 @@ fi
 source ~/.local/share/omakub/install/check-gnome.sh
 
 sudo apt-get update >/dev/null
-sudo apt-get install -y git >/dev/null
+
