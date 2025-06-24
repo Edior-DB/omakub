@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Ensure gum is installed for prompts
+if ! command -v gum >/dev/null 2>&1; then
+  echo "gum not found. Installing gum for interactive prompts..."
+  if [ "$OMAKUB_OS_ID" = "ubuntu" ] || [ "$OMAKUB_OS_ID" = "debian" ]; then
+    sudo apt update
+    sudo apt install -y gum
+  else
+    echo "Unsupported OS for gum installation."
+    exit 1
+  fi
+fi
+
 # Check if Gnome is installed
 if ! command -v gnome-shell >/dev/null 2>&1; then
   echo "Gnome is not installed. Installing Gnome desktop environment..."
@@ -12,6 +24,14 @@ if ! command -v gnome-shell >/dev/null 2>&1; then
     exit 1
   fi
   echo "Gnome installation complete."
+  # Prompt user to reboot or continue
+  if gum confirm "Gnome has been installed. You must reboot to start a GNOME session and install desktop apps. Reboot now?"; then
+    echo "Rebooting... Please log in to GNOME and re-run the installer."
+    sudo reboot
+    exit 0
+  else
+    echo "Continuing with terminal-only installation. You can re-run the installer after reboot to complete desktop setup."
+  fi
 else
   echo "Gnome is already installed."
 fi
