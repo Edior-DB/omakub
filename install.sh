@@ -18,7 +18,7 @@ trap 'omakub_error_trap' ERR
 source ~/.local/share/omakub/install/check-version.sh
 
 # Ask for required tools and user choices
-echo "Get ready to make a few choices..."
+echo "Get ready ..."
 source ~/.local/share/omakub/install/terminal/required/app-gum.sh >/dev/null
 
 source ~/.local/share/omakub/install/identification.sh
