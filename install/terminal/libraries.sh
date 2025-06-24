@@ -1,11 +1,15 @@
 # This script installs core libraries required for various applications and tools on Ubuntu or Debian systems.
 
-apt='apt'
-
-if command -v gum >/dev/null 2>&1; then
+if command -v nala >/dev/null 2>&1; then
+  apt='nala'
+elif command -v gum >/dev/null 2>&1; then
   if gum confirm "Do you want to install nala? It works faster..."; then
-    sudo apt install -y nala && apt='nala'
+    sudo apt install -y nala && apt='nala' || apt='apt'
+  else
+    apt='apt'
   fi
+else
+  apt='apt'
 fi
 
 # Install core libraries (including MySQL/MariaDB dev)
