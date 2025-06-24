@@ -1,6 +1,8 @@
 # Idempotent install: check if Zoom is already installed
 if command -v zoom >/dev/null 2>&1; then
-  echo "Zoom is already installed, skipping."
+  # Check if zoom is installed before running --version
+  ZOOM_VERSION=$(zoom --version 2>/dev/null | head -n 1)
+  echo "Zoom is already installed: $ZOOM_VERSION. Skipping install."
   exit 0
 fi
 

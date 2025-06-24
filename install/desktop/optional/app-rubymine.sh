@@ -1,6 +1,8 @@
 # Idempotent install: check if already installed
+# Check if rubymine is installed before running --version
 if command -v rubymine >/dev/null 2>&1; then
-  echo "RubyMine is already installed, skipping."
+  RUBYMINE_VERSION=$(rubymine --version 2>/dev/null | head -n 1)
+  echo "RubyMine is already installed: $RUBYMINE_VERSION. Skipping install."
   exit 0
 fi
 

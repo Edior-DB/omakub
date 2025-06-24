@@ -1,7 +1,10 @@
 # Obsidian is a multi-platform note taking application. See https://obsidian.md
 # Idempotent install: check if already installed
+
+# Check if obsidian is installed before running --version
 if command -v obsidian >/dev/null 2>&1; then
-  echo "Obsidian is already installed, skipping."
+  OBSIDIAN_VERSION=$(obsidian --version 2>/dev/null | head -n 1)
+  echo "Obsidian is already installed: $OBSIDIAN_VERSION. Skipping install."
   exit 0
 fi
 

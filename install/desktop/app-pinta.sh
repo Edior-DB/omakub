@@ -1,3 +1,10 @@
+# Check if pinta is installed before running --version
+if command -v pinta >/dev/null 2>&1; then
+  PINTA_VERSION=$(pinta --version 2>/dev/null | head -n 1)
+  echo "Pinta is already installed: $PINTA_VERSION. Skipping install."
+  exit 0
+fi
+
 # Idempotent install: check if already installed
 if command -v pinta >/dev/null 2>&1; then
   echo "Pinta is already installed, skipping."

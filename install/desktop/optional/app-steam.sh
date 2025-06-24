@@ -1,6 +1,7 @@
 # Idempotent install: check if Steam is already installed
 if command -v steam >/dev/null 2>&1; then
-  echo "Steam is already installed, skipping."
+  STEAM_VERSION=$(steam --version 2>/dev/null | head -n 1)
+  echo "Steam is already installed: $STEAM_VERSION. Skipping install."
   exit 0
 fi
 

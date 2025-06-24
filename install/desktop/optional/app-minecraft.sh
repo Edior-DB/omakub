@@ -1,6 +1,8 @@
 # Idempotent install: check if Minecraft Launcher is already installed
+# Check if minecraft-launcher is installed before running --version
 if command -v minecraft-launcher >/dev/null 2>&1; then
-  echo "Minecraft Launcher is already installed, skipping."
+  MINECRAFT_VERSION=$(minecraft-launcher --version 2>/dev/null | head -n 1)
+  echo "Minecraft Launcher is already installed: $MINECRAFT_VERSION. Skipping install."
   exit 0
 fi
 
