@@ -22,6 +22,21 @@ else
   exit 1
 fi
 
+# Debian 12 peculiarity: check if user is in sudo group
+if [ "$ID" = "debian" ] && [ $(echo "$VERSION_ID >= 12" | bc) -eq 1 ]; then
+  if ! groups "$USER" | grep -qw sudo; then
+    echo "$(tput setaf 1)Error: Your user ($USER) is not in the 'sudo' group."
+    echo "On Debian 12+, you must add your user to the 'sudo' group and re-login before running this installer."
+    echo "Switch to root with: su -"
+    echo "Then run: /sbin/usermod -aG sudo <your-username>"
+    echo "(Replace <your-username> with your actual username, e.g. '$(logname)' if unsure)"
+    echo "After that, log out and log back in as your user, then re-run the installer."
+    echo "For some weird reason, you might also need to reboot your system."
+    echo "Installation stopped."
+    exit 1
+  fi
+fi
+
 # Check if running on x86
 ARCH=$(uname -m)
 if [ "$ARCH" != "x86_64" ] && [ "$ARCH" != "i686" ]; then
