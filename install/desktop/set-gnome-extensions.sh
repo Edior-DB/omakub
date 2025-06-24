@@ -16,7 +16,9 @@ if [ -f /etc/os-release ]; then
     gnome-extensions disable ubuntu-dock@ubuntu.com
   fi
 fi
-gnome-extensions disable ding@rastersoft.com
+if gnome-extensions list | grep -q '^ding@rastersoft.com$'; then
+  gnome-extensions disable ding@rastersoft.com
+fi
 
 # Pause to assure user is ready to accept confirmations
 gum confirm "To install Gnome extensions, you need to accept some confirmations. Ready?"
