@@ -1,8 +1,22 @@
 # Omakub
 
+> **Note:** This fork of Omakub is a heavily refactored and extended version of the original [Basecamp Omakub](https://github.com/basecamp/omakub). It is not fully tested and may contain bugs or incomplete features. Use at your own risk and please report issues.
+
 Turn a fresh Ubuntu or Debian installation into a fully-configured, beautiful, and modern web development system by running a single command. Omakub is an opinionated take on what Linux can be at its best.
 
 Watch the introduction video and read more at [omakub.org](https://omakub.org).
+
+## Essential Changes from Basecamp's Original Omakub
+
+- **Cross-distro compatibility:** Full support for Ubuntu 24.04+ and Debian 12+ with robust OS detection and package handling.
+- **Strict GNOME/GDM3 requirement:** Installer halts if not running under GNOME or GDM3.
+- **Core vs. Optional Apps:** Only core terminal tools and GNOME-tweaking scripts are installed by default. All other apps (including Docker, Neovim, Chrome, LibreOffice, etc.) are now optional and can be installed later via the Omakub app or optional scripts.
+- **Fastfetch and Alacritty:** Now required and installed early in the process.
+- **Flatpak:** Now a required dependency, installed/configured before any app install.
+- **Application launchers:** All launchers are safe to source and do not exit the parent process. They check for dependencies and remove launchers if missing.
+- **GNOME extension setup:** Improved for cross-distro compatibility, with checks for extension/key existence before configuration.
+- **Idempotency and error handling:** All scripts are idempotent, robust, and provide improved error handling and user feedback.
+- **Directory structure:** Optional and required scripts are now clearly separated. Obsolete and legacy scripts have been removed.
 
 ## Quick Install
 
