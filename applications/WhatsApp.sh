@@ -1,3 +1,10 @@
+# Check if Google Chrome is installed
+if ! command -v google-chrome >/dev/null 2>&1; then
+  echo "Warning: Google Chrome is not installed. The WhatsApp launcher will not be created."
+  rm -f ~/.local/share/applications/WhatsApp.desktop
+  exit 0
+fi
+# Create the launcher if Chrome is present
 cat <<EOF >~/.local/share/applications/WhatsApp.desktop
 [Desktop Entry]
 Version=1.0

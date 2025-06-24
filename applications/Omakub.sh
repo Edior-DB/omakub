@@ -1,3 +1,10 @@
+# Check if alacritty is installed
+if ! command -v alacritty >/dev/null 2>&1; then
+  echo "Warning: Alacritty is not installed. The Omakub launcher will not be created."
+  rm -f ~/.local/share/applications/Omakub.desktop
+  exit 0
+fi
+# Create the launcher if Alacritty is present
 cat <<EOF >~/.local/share/applications/Omakub.desktop
 [Desktop Entry]
 Version=1.0

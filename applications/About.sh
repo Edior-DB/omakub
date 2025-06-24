@@ -1,3 +1,10 @@
+# Check if fastfetch and alacritty are installed
+if ! command -v fastfetch >/dev/null 2>&1 || ! command -v alacritty >/dev/null 2>&1; then
+  echo "Warning: Fastfetch or Alacritty is not installed. The About launcher will not be created."
+  rm -f ~/.local/share/applications/About.desktop
+  exit 0
+fi
+# Create the launcher if dependencies are present
 cat <<EOF >~/.local/share/applications/About.desktop
 [Desktop Entry]
 Version=1.0
