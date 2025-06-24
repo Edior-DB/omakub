@@ -1,6 +1,10 @@
 # Exit immediately if a command exits with a non-zero status and print errors clearly
 set -eEuo pipefail
 
+# Initialize for error reporting
+current_command=""
+last_command=""
+
 # Improved error reporting: show the failed command and its exit code for easier troubleshooting
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'echo -e "\nOmakub installation failed!\n  Command: $last_command\n  Exit code: $?\n  You can retry by running: source ~/.local/share/omakub/install.sh"; while true; do sleep 1; done' ERR
