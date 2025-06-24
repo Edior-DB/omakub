@@ -36,8 +36,10 @@ if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
   gsettings set org.gnome.desktop.screensaver lock-enabled true
   gsettings set org.gnome.desktop.session idle-delay 300
 else
-  # If not running GNOME, check and offer to install GNOME
-  source ~/.local/share/omakub/install/check-gnome.sh
+  # If not running GNOME, check and offer to install GNOME after terminal tools
   echo "Only installing terminal tools..."
   source ~/.local/share/omakub/install/terminal.sh
+
+  echo "You can now optionally install GNOME and desktop apps."
+  source ~/.local/share/omakub/install/check-gnome.sh
 fi
