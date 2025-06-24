@@ -1,6 +1,10 @@
 # Get latest Neovim version
 LATEST_NVIM_VERSION=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest | grep 'tag_name' | cut -d '"' -f4 | sed 's/^v//')
-INSTALLED_NVIM_VERSION=$(command -v nvim >/dev/null 2>&1 && nvim --version | head -n1 | awk '{print $2}')
+if command -v nvim >/dev/null 2>&1; then
+  INSTALLED_NVIM_VERSION=$(nvim --version | head -n1 | awk '{print $2}')
+else
+  INSTALLED_NVIM_VERSION=""
+fi
 
 if [ "$INSTALLED_NVIM_VERSION" = "$LATEST_NVIM_VERSION" ]; then
   echo "Neovim $LATEST_NVIM_VERSION is already installed, skipping."
