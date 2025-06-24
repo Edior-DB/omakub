@@ -46,5 +46,5 @@ else
   source ~/.local/share/omakub/install/terminal.sh
 
   echo "You can now optionally install GNOME and desktop apps."
-  source ~/.local/share/omakub/install/check-gnome.sh
+  
 fi
