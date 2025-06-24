@@ -7,5 +7,14 @@ if [ -z "${OMAKUB_PATH:-}" ]; then
   exit 1
 fi
 
+if [ ! -f "$OMAKUB_PATH/bin/omakub-sub/header.sh" ]; then
+  echo "header.sh not found in $OMAKUB_PATH/bin/omakub-sub" >&2
+  exit 1
+fi
+if [ ! -f "$OMAKUB_PATH/bin/omakub-sub/menu.sh" ]; then
+  echo "menu.sh not found in $OMAKUB_PATH/bin/omakub-sub" >&2
+  exit 1
+fi
+
 source $OMAKUB_PATH/bin/omakub-sub/header.sh 2>>"$LOGFILE"
 source $OMAKUB_PATH/bin/omakub-sub/menu.sh 2>>"$LOGFILE"
