@@ -1,4 +1,11 @@
 #!/bin/bash
+set -euo pipefail
+LOGFILE="${OMAKUB_PATH:-$HOME}/omakub-error.log"
 
-source $OMAKUB_PATH/bin/omakub-sub/header.sh
-source $OMAKUB_PATH/bin/omakub-sub/menu.sh
+if [ -z "${OMAKUB_PATH:-}" ]; then
+  echo "OMAKUB_PATH is not set. Exiting." >&2
+  exit 1
+fi
+
+source $OMAKUB_PATH/bin/omakub-sub/header.sh 2>>"$LOGFILE"
+source $OMAKUB_PATH/bin/omakub-sub/menu.sh 2>>"$LOGFILE"
