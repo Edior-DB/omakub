@@ -10,7 +10,6 @@ fi
 
 if [ "$INSTALLED_NVIM_VERSION" = "$LATEST_NVIM_VERSION" ]; then
   echo "Neovim $LATEST_NVIM_VERSION is already installed, skipping."
-  exit 0
 else
   cd /tmp
   wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
@@ -29,7 +28,7 @@ else
   echo "Installing luarocks..."
   if ! sudo apt install -y luarocks; then
     echo "Error: Failed to install luarocks. Please check your apt sources and try again."
-    exit 1
+    return 1
   fi
 fi
 if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
