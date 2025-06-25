@@ -1,3 +1,3 @@
-for script in ~/.local/share/omakub/applications/*.sh ~/.local/share/omakub/applications/optional/*.sh; do
+for script in ~/.local/share/omakub/applications/*.sh; do
   [ -f "$script" ] && source "$script"
 done
