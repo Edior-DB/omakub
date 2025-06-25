@@ -15,6 +15,6 @@ if [ ! -f "$OMAKUB_PATH/bin/omakub-sub/menu.sh" ]; then
   exit 1
 fi
 
-source "$OMAKUB_PATH/install/check-version.sh"
+source $OMAKUB_PATH/install/check-version.sh
 source $OMAKUB_PATH/bin/omakub-sub/header.sh
 source $OMAKUB_PATH/bin/omakub-sub/menu.sh
