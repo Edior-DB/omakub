@@ -15,3 +15,6 @@ elif [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
 else
   echo "Unsupported OS: $OMAKUB_OS_ID. GNOME Tweaks install skipped." >&2
 fi
+
+# Ensure safe sourcing: never exit or return
+true
