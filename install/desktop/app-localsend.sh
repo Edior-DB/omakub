@@ -7,7 +7,7 @@ if command -v localsend >/dev/null 2>&1; then
 else
   echo "Installing LocalSend..."
   cd /tmp || { echo "Failed to cd to /tmp"; exit 1; }
-  LOCALSEND_VERSION=$(curl -fsSL "https://api.github.com/repos/localsend/localsend/releases/latest" | sed -n 's/.*"tag_name": "v\\([^"]*\\)".*/\\1/p')
+  LOCALSEND_VERSION=$(curl -fsSL "https://api.github.com/repos/localsend/localsend/releases/latest" | sed -n 's/.*"tag_name": "v\([^"\)]*\)".*/\1/p')
   if [ -z "$LOCALSEND_VERSION" ]; then
     echo "Failed to fetch LocalSend version." >&2
     exit 1
