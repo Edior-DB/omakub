@@ -24,12 +24,25 @@ CHOICES=(
   "<< Back           "
 )
 
-if [ "$OMAKUB_OS_ID" = "debian" ]; then
-  if ! command -v gawk >/dev/null 2>&1; then
-    echo "Installing gawk for consistent awk behavior on Debian..."
-    sudo apt-get update && sudo apt-get install -y gawk
+
+
+# Auto-generated: load all optional installers from desktop/optional and terminal/optional, deduplicated
+OPTIONAL_DESKTOP=( $(ls "$OMAKUB_PATH/install/desktop/optional/" | grep '^app-.*\\.sh$\|^select-.*\\.sh$' | sed 's/^app-//;s/^select-//;s/\\.sh$//;s/-/ /g') )
+OPTIONAL_TERMINAL=( $(ls "$OMAKUB_PATH/install/terminal/optional/" | grep '^app-.*\\.sh$\|^select-.*\\.sh$' | sed 's/^app-//;s/^select-//;s/\\.sh$//;s/-/ /g') )
+
+# Deduplicate and sort
+ALL_OPTIONAL=("${OPTIONAL_DESKTOP[@]}" "${OPTIONAL_TERMINAL[@]}")
+ALL_OPTIONAL_SORTED=( $(printf "%s\n" "${ALL_OPTIONAL[@]}" | awk '!seen[$0]++' | sort) )
+
+for opt in "${ALL_OPTIONAL_SORTED[@]}"; do
+  # Determine source for label
+  if [[ " ${OPTIONAL_DESKTOP[*]} " == *" $opt "* ]]; then
+    CHOICES+=("$(tr '[:lower:]' '[:upper:]' <<< ${opt:0:1})${opt:1}        (Desktop optional)")
+  elif [[ " ${OPTIONAL_TERMINAL[*]} " == *" $opt "* ]]; then
+    CHOICES+=("$(tr '[:lower:]' '[:upper:]' <<< ${opt:0:1})${opt:1}        (Terminal optional)")
   fi
-fi
+  # If in both, only Desktop label will show (first match)
+done
 
 CHOICE=$(gum choose "${CHOICES[@]}" --height 25 --header "Install application")
 
@@ -54,6 +67,13 @@ else
     "geekbench") INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-geekbench.sh" ;;
     *) INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/app-$INSTALLER.sh" ;;
   esac
+
+  # Try both locations for the installer script
+  if [ -f "$OMAKUB_PATH/install/desktop/optional/app-$INSTALLER.sh" ]; then
+    INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/app-$INSTALLER.sh"
+  elif [ -f "$OMAKUB_PATH/install/terminal/optional/app-$INSTALLER.sh" ]; then
+    INSTALLER_FILE="$OMAKUB_PATH/install/terminal/optional/app-$INSTALLER.sh"
+  fi
 
   if [ -f "$INSTALLER_FILE" ]; then
     echo "Running installer: $INSTALLER_FILE"
