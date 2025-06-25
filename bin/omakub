@@ -2,16 +2,16 @@
 set -euo pipefail
 
 if [ -z "${OMAKUB_PATH:-}" ]; then
-  echo "OMAKUB_PATH is not set. Exiting." >&2
+  echo "OMAKUB_PATH is not set. Exiting."
   exit 1
 fi
 
 if [ ! -f "$OMAKUB_PATH/bin/omakub-sub/header.sh" ]; then
-  echo "header.sh not found in $OMAKUB_PATH/bin/omakub-sub" >&2
+  echo "header.sh not found in $OMAKUB_PATH/bin/omakub-sub"
   exit 1
 fi
 if [ ! -f "$OMAKUB_PATH/bin/omakub-sub/menu.sh" ]; then
-  echo "menu.sh not found in $OMAKUB_PATH/bin/omakub-sub" >&2
+  echo "menu.sh not found in $OMAKUB_PATH/bin/omakub-sub"
   exit 1
 fi
 
