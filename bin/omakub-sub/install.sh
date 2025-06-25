@@ -24,6 +24,13 @@ CHOICES=(
   "<< Back           "
 )
 
+if [ "$OMAKUB_OS_ID" = "debian" ]; then
+  if ! command -v gawk >/dev/null 2>&1; then
+    echo "Installing gawk for consistent awk behavior on Debian..."
+    sudo apt-get update && sudo apt-get install -y gawk
+  fi
+fi
+
 CHOICE=$(gum choose "${CHOICES[@]}" --height 25 --header "Install application")
 
 if [[ "$CHOICE" == "<< Back"* ]] || [[ -z "$CHOICE" ]]; then
@@ -36,11 +43,7 @@ elif [[ "$CHOICE" == "> All"* ]]; then
     gum spin --spinner globe --title "Install completed!" -- sleep 3
   fi
 else
-  if [ "$OMAKUB_OS_ID" = "debian" ]; then
-    INSTALLER=$(echo "$CHOICE" | sed 's/  \{2,\}.*//' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
-  else
-    INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
-  fi
+  INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
   case "$INSTALLER" in
     "dev-editor") INSTALLER_FILE="$OMAKUB_PATH/bin/omakub-sub/install-dev-editor.sh" ;;
     "web-apps") INSTALLER_FILE="$OMAKUB_PATH/install/desktop/optional/select-web-apps.sh" ;;
