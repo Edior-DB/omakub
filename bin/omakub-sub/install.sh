@@ -1,9 +1,6 @@
 set -euo pipefail
 
-if [ -z "${OMAKUB_PATH:-}" ]; then
-  echo "OMAKUB_PATH is not set. Exiting."
-  exit 1
-fi
+
 
 CHOICES=(
   "Dev Editor        Install alternative programming editors"
