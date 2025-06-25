@@ -14,5 +14,5 @@ else
 fi
 
 # Script completed
-[ "$OMAKUB_QUIET" = "1" ] || echo "GNOME Tweaks check complete."
+[ "${OMAKUB_QUIET:-}" = "1" ] || echo "GNOME Tweaks check complete."
 true
