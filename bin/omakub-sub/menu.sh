@@ -1,7 +1,7 @@
 set -euo pipefail
 
 if [ -z "${OMAKUB_PATH:-}" ]; then
-  echo "OMAKUB_PATH is not set. Exiting." >&2
+  echo "OMAKUB_PATH is not set. Exiting."
   exit 1
 fi
 
@@ -15,6 +15,6 @@ if [ -n "$SUB" ] && [ "$SUB" != "quit" ]; then
   if [ -f "$OMAKUB_PATH/bin/omakub-sub/$SUB.sh" ]; then
     source "$OMAKUB_PATH/bin/omakub-sub/$SUB.sh"
   else
-    echo "Script $SUB.sh not found." >&2
+    echo "Script $SUB.sh not found."
   fi
 fi

@@ -1,7 +1,7 @@
 set -euo pipefail
 
 if [ -z "${OMAKUB_PATH:-}" ]; then
-  echo "OMAKUB_PATH is not set. Exiting." >&2
+  echo "OMAKUB_PATH is not set. Exiting."
   exit 1
 fi
 
@@ -63,7 +63,7 @@ else
     echo "Running installer: $INSTALLER_FILE"
     source "$INSTALLER_FILE" && gum spin --spinner globe --title "Install completed!" -- sleep 3
   else
-    echo "Installer $INSTALLER_FILE not found." >&2
+    echo "Installer $INSTALLER_FILE not found."
   fi
 fi
 
