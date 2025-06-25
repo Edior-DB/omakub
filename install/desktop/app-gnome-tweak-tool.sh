@@ -1,3 +1,5 @@
+set +e  # Disable exit-on-error for this script
+
 if [ "$OMAKUB_OS_ID" = "ubuntu" ]; then
   if ! dpkg -s gnome-tweak-tool >/dev/null 2>&1; then
     sudo apt-get update
@@ -12,5 +14,5 @@ else
 fi
 
 # Script completed
-#[ "$OMAKUB_QUIET" = "1" ] || echo "GNOME Tweaks check complete."
-#true
+[ "$OMAKUB_QUIET" = "1" ] || echo "GNOME Tweaks check complete."
+true
