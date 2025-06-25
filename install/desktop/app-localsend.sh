@@ -1,6 +1,3 @@
-set -e  # Exit on error
-set -x  # Debug tracing
-
 # Idempotent install: check if LocalSend is already installed
 if command -v localsend >/dev/null 2>&1; then
   echo "LocalSend is already installed, skipping."
