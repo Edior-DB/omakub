@@ -1,7 +1,3 @@
-set -euo pipefail
-
-
-
 CHOICES=(
   "Dev Editor        Install alternative programming editors"
   "Dev Language      Install programming language environment"
@@ -41,7 +37,7 @@ elif [[ "$CHOICE" == "> All"* ]]; then
   fi
 else
   if [ "$OMAKUB_OS_ID" = "debian" ]; then
-    INSTALLER=$(echo "$CHOICE" | awk '{print $1}' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
+    INSTALLER=$(echo "$CHOICE" | sed 's/  \{2,\}.*//' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
   else
     INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
   fi
