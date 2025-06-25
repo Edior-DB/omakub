@@ -1,5 +1,4 @@
 set -euo pipefail
-LOGFILE="${OMAKUB_PATH:-$HOME}/omakub-error.log"
 
 if [ -z "${OMAKUB_PATH:-}" ]; then
   echo "OMAKUB_PATH is not set. Exiting." >&2
