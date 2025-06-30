@@ -1,10 +1,11 @@
-# Install default databases
-if [[ -v OMAKUB_FIRST_RUN_DBS ]]; then
-	dbs=$OMAKUB_FIRST_RUN_DBS
-else
-	AVAILABLE_DBS=("MySQL" "Redis" "PostgreSQL")
-	dbs=$(gum choose "${AVAILABLE_DBS[@]}" --no-limit --height 5 --header "Select databases (runs in Docker)")
+# Check if Docker is installed, install if missing
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Docker not found. Installing Docker..."
+  source "$OMAKUB_PATH/install/terminal/docker.sh"
 fi
+
+AVAILABLE_DBS=("MySQL" "Redis" "PostgreSQL")
+dbs=$(gum choose "${AVAILABLE_DBS[@]}" --no-limit --height 5 --header "Select databases (runs in Docker)")
 
 if [[ -n "$dbs" ]]; then
 	for db in $dbs; do
