@@ -20,5 +20,9 @@ Icon=/home/$USER/.local/share/omakub/applications/icons/Brave.png
 Categories=GTK;Network;WebBrowser;
 StartupNotify=true
 EOF
+    # Add to dock (GNOME)
+    if command -v gsettings >/dev/null 2>&1; then
+      gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'Brave.desktop']/;s/\('Brave.desktop', \)\{2,\}/'Brave.desktop', /")"
+    fi
   fi
 fi

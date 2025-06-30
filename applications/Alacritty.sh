@@ -12,7 +12,7 @@ Comment=Alacritty Terminal Emulator
 Exec=alacritty
 Terminal=false
 Type=Application
-Icon=alacritty
+Icon=/home/$USER/.local/share/omakub/applications/icons/Alacritty.png
 Categories=GTK;System;TerminalEmulator;
 StartupNotify=false
 EOF

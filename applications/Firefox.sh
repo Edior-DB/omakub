@@ -19,5 +19,9 @@ Icon=firefox
 Categories=GTK;Network;WebBrowser;
 StartupNotify=true
 EOF
+    # Add to dock (GNOME)
+    if command -v gsettings >/dev/null 2>&1; then
+      gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'Firefox.desktop']/;s/\('Firefox.desktop', \)\{2,\}/'Firefox.desktop', /")"
+    fi
   fi
 fi
