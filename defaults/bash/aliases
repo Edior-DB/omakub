@@ -5,7 +5,7 @@ alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 alias ff="fzf --preview 'batcat --style=numbers --color=always {}'"
 alias fd='fdfind'
-# alias cd='z'  # Removed to prevent infinite recursion and shell hangs
+alias zd='z'  # Removed to prevent infinite recursion and shell hangs
 
 # Directories
 alias ..='cd ..'
