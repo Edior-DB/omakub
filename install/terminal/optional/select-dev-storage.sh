@@ -1,7 +1,7 @@
 # Check if Docker is installed, install if missing
 if ! command -v docker >/dev/null 2>&1; then
   echo "Docker not found. Installing Docker..."
-  source "$OMAKUB_PATH/install/terminal/docker.sh"
+  source "$OMAKUB_PATH/install/terminal/optional/docker.sh"
 fi
 # Ensure lazydocker is installed
 source "$OMAKUB_PATH/install/terminal/optional/app-lazydocker.sh"
