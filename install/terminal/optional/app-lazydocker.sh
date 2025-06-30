@@ -4,14 +4,14 @@ if command -v lazydocker >/dev/null 2>&1; then
   LAZYDOCKER_VERSION=$(lazydocker --version 2>/dev/null | head -n 1)
   echo "lazydocker is already installed: $LAZYDOCKER_VERSION. Skipping install."
 else
-  if [ "$OMAKUB_OS_ID" = "ubuntu" ] || [ "$OMAKUB_OS_ID" = "debian" ]; then
-    if ! sudo apt update -y; then
-      echo "Error: Failed to update apt sources."; return 1; fi
-    if ! sudo apt install -y lazydocker; then
-      echo "Error: Failed to install lazydocker."; return 1; fi
-  else
-    echo "Unsupported OS for lazydocker installation."; return 1;
-  fi
+  # Install from GitHub releases as per official instructions
+  cd /tmp || exit 1
+  LAZYDOCKER_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+  curl -sLo lazydocker.tar.gz "https://github.com/jesseduffield/lazydocker/releases/latest/download/lazydocker_${LAZYDOCKER_VERSION}_Linux_x86_64.tar.gz"
+  tar -xf lazydocker.tar.gz lazydocker
+  sudo install lazydocker /usr/local/bin
+  rm lazydocker.tar.gz lazydocker
+  cd - || true
 
   if command -v lazydocker >/dev/null 2>&1; then
     LAZYDOCKER_VERSION=$(lazydocker --version 2>/dev/null | head -n 1)
