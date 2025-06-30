@@ -1,6 +1,10 @@
 # Alacritty launcher
 # Alacritty is required, so no need to check for it
 mkdir -p ~/.local/share/applications
+mkdir -p ~/.local/share/icons
+
+
+
 if [ ! -w ~/.local/share/applications ]; then
   echo "Error: Cannot write to ~/.local/share/applications."
 else
@@ -12,7 +16,7 @@ Comment=Alacritty Terminal Emulator
 Exec=alacritty
 Terminal=false
 Type=Application
-Icon=/home/$USER/.local/share/omakub/applications/icons/Alacritty.png
+Icon=~/.local/share/omakub/applications/icons/alacritty.svg
 Categories=GTK;System;TerminalEmulator;
 StartupNotify=false
 EOF
