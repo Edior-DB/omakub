@@ -10,8 +10,6 @@ fi
 export OMAKUB_OS_ID="$ID"
 export OMAKUB_OS_VERSION_ID="$VERSION_ID"
 
-
-
 # Check if running on Ubuntu 24.04+ or Debian 12+
 if { [ "$ID" = "ubuntu" ] && [ $(echo "$VERSION_ID >= 24.04" | bc) -eq 1 ]; } || \
    { [ "$ID" = "debian" ] && [ $(echo "$VERSION_ID >= 12" | bc) -eq 1 ]; }; then
@@ -48,4 +46,9 @@ fi
 source ~/.local/share/omakub/install/check-gnome.sh
 
 sudo apt-get update >/dev/null
+
+# Export Ubuntu version for use in other scripts
+export OMAKUB_UBUNTU_MAJOR=$(echo $OMAKUB_OS_VERSION_ID | cut -d. -f1)
+export OMAKUB_UBUNTU_MINOR=$(echo $OMAKUB_OS_VERSION_ID | cut -d. -f2)
+export OMAKUB_DEBIAN_MAJOR=$(echo $OMAKUB_OS_VERSION_ID | cut -d. -f1)
 
